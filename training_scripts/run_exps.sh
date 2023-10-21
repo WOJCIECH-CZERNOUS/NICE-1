@@ -4,9 +4,12 @@ export WANDB_MODE=offline
 
 # Run the script        
 # script to iterate through different hyperparameters
-seeds=(0 1 2 3 4)
-densities=(1 2 3)
-moveup_weights=(0 1)
+# seeds=(0 1 2 3 4)
+# densities=(1 2 3)
+# moveup_weights=(0 1)
+seeds=(0)
+densities=(1)
+moveup_weights=(0)
 # Run the script
 for i in ${!seeds[@]}; do
     # run for different seeds
@@ -18,7 +21,7 @@ for i in ${!seeds[@]}; do
             moveup_weight=${moveup_weights[$k]}
             buffer_weight=$(expr 1 - $moveup_weight)
             # run for all different envs
-            sbatch training_scripts/helper.sh -s ${seed} -d ${density} -m ${moveup_weight} -b ${buffer_weight}
+            training_scripts/helper.sh -s ${seed} -d ${density} -m ${moveup_weight} -b ${buffer_weight}
         done
     done
 done

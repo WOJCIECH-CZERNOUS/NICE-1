@@ -490,8 +490,12 @@ if __name__ == '__main__':
     from RL.utils.logger import WandbLogger
     from pilotRLEnv.env import PilotRLEnv
 
+    print("Calling check_steps_per_MPI_task()...")
     args = check_steps_per_MPI_task(args, num_procs())
+    print(args)
+
     # setup the Wandb Logger
+
     logger = None
     if not args.dryrun:
         logger = WandbLogger(experiment_name='ppo', save_folder='ppo', 
@@ -504,13 +508,13 @@ if __name__ == '__main__':
     env = PilotRLEnv(args, seed=seed)
     test_env = PilotRLEnv(args, seed=seed+1)
 
-    ac_kwargs=dict(hidden_sizes=[args.hid]*args.l)
-
-    ppo(env=env, test_env=test_env, actor_critic=MLPActorCritic, 
-        ac_kwargs=ac_kwargs, seed=args.seed, steps_per_epoch=args.steps_per_epoch,
-        epochs=args.epochs, gamma=args.gamma, clip_ratio=args.clip_ratio, 
-        pi_lr=args.pi_lr, vf_lr=args.vf_lr, train_pi_iters=args.train_pi_iters, 
-        train_v_iters=args.train_v_iters, lam=args.lam, max_ep_len=args.max_ep_len,
-        target_kl=args.target_kl, save_freq=args.save_freq, 
-        num_test_rollouts=args.num_test_rollouts, eval_freq=args.eval_freq,
-        logger=logger, log_losses=args.log_losses, mask_actions=args.mask_actions)
+    # ac_kwargs=dict(hidden_sizes=[args.hid]*args.l)
+    # print("Calling ppo() routine...")
+    # ppo(env=env, test_env=test_env, actor_critic=MLPActorCritic, 
+    #     ac_kwargs=ac_kwargs, seed=args.seed, steps_per_epoch=args.steps_per_epoch,
+    #     epochs=args.epochs, gamma=args.gamma, clip_ratio=args.clip_ratio, 
+    #     pi_lr=args.pi_lr, vf_lr=args.vf_lr, train_pi_iters=args.train_pi_iters, 
+    #     train_v_iters=args.train_v_iters, lam=args.lam, max_ep_len=args.max_ep_len,
+    #     target_kl=args.target_kl, save_freq=args.save_freq, 
+    #     num_test_rollouts=args.num_test_rollouts, eval_freq=args.eval_freq,
+    #     logger=logger, log_losses=args.log_losses, mask_actions=args.mask_actions)
